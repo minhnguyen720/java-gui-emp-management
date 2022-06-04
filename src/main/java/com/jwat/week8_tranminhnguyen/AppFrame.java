@@ -12,6 +12,7 @@ public class AppFrame extends javax.swing.JFrame {
     public AppFrame() {
         initComponents();
         configureComponents();
+//        DataStorage.initDummyData();
         initTableData();
         initStatistic();
     }

@@ -213,8 +213,9 @@ public class UpdateForm extends javax.swing.JFrame {
         var dataValidator = new DataValidator();
         List<String> data = addData();
         String role = data.get(3);
+        String dept = data.get(4);
 
-        if (dataValidator.validateRole(role) && dataValidator.validateDataFormat(data)) {
+        if (dataValidator.validateRole(role,dept) && dataValidator.validateDataFormat(data)) {
             DataStorage.updateByIndex(data, selectedRow);
             var demo = new AppFrame();
             this.dispose();

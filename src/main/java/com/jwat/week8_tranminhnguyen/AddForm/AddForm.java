@@ -18,7 +18,6 @@ public class AddForm extends javax.swing.JFrame {
 
     public AddForm(JFrame frame, JTable table) {
         this.table = table;
-        dataValidator = new DataValidator();
         initComponents();
     }
 
@@ -30,7 +29,7 @@ public class AddForm extends javax.swing.JFrame {
         data.add(roleOption.getSelectedItem().toString());
         data.add(deptOption.getSelectedItem().toString());
         data.add(salaryField.getText());
-        
+
         return data;
     }
 
@@ -221,12 +220,18 @@ public class AddForm extends javax.swing.JFrame {
         if (nameField.getText().isEmpty() || dobField.getText().isEmpty() || salaryField.getText().isEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter all data");
         } else {
+            dataValidator = new DataValidator();
             // adding data to list
             List<String> data = addData();
+            String role = roleOption.getSelectedItem().toString();
+            String dept = deptOption.getSelectedItem().toString();
 
-            if (dataValidator.validateRole(roleOption.getSelectedItem().toString()) && dataValidator.validateDataFormat(data)) {
-                // add row to table
+//            System.out.println(role + "  " + dept);
+
+            if (dataValidator.validateRole(role, dept) && dataValidator.validateDataFormat(data)) {
+                // add data to storage
                 DataStorage.addData(data);
+                DataStorage.addDataByDept(data);
 
                 // Send success message and reset data field
                 JOptionPane.showMessageDialog(this, "Success");

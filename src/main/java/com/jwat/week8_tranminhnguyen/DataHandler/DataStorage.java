@@ -16,26 +16,45 @@ public class DataStorage {
         return dataFromTable;
     }
 
+    public static List<List<String>> getItData() {
+        return itDeptList;
+    }
+
+    public static List<List<String>> getHrData() {
+        return hrDeptList;
+    }
+
+    public static List<List<String>> getAccountData() {
+        return accountDeptList;
+    }
+
+    public static List<List<String>> getSalesData() {
+        return salesDeptList;
+    }
+
     //------------ Add data methods -----------------
     public static void addData(List<String> data) {
         dataFromTable.add(data);
     }
 
-    public static void addDataByRole(List<List<String>> data) {  
-        for (List<String> e : data) {
-            if (e.get(3).equalsIgnoreCase("it")) {
+    public static void addDataByDept(List<String> e) {
+            if (e.get(4).equalsIgnoreCase("it")) {
                 itDeptList.add(e);
             }
-            if (e.get(3).equalsIgnoreCase("account")) {
+            if (e.get(4).equalsIgnoreCase("account")) {
                 accountDeptList.add(e);
             }
-            if (e.get(3).equalsIgnoreCase("sales")) {
+            if (e.get(4).equalsIgnoreCase("sales")) {
                 salesDeptList.add(e);
             }
-            if (e.get(3).equalsIgnoreCase("hr")) {
+            if (e.get(4).equalsIgnoreCase("hr")) {
                 hrDeptList.add(e);
             }
-        }
+            
+//            System.out.println("IT " + itDeptList.size());
+//            System.out.println("Acc " + accountDeptList.size());
+//            System.out.println("hr " + hrDeptList.size());
+//            System.out.println("sales " + salesDeptList.size());
     }
 
 // ----------------------------------------------
