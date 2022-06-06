@@ -3,34 +3,44 @@ package com.jwat.week8_tranminhnguyen.AddForm;
 import com.jwat.week8_tranminhnguyen.DataHandler.DataStorage;
 import com.jwat.week8_tranminhnguyen.DataHandler.DataValidator;
 import com.jwat.week8_tranminhnguyen.AppFrame;
-import java.util.List;
-import java.util.ArrayList;
-import javax.swing.JFrame;
+import com.jwat.week8_tranminhnguyen.model.Employee;
+
 import javax.swing.JOptionPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
 
 public class AddForm extends javax.swing.JFrame {
 
-    private JTable table;
-    private JFrame frame;
     private DataValidator dataValidator;
 
-    public AddForm(JFrame frame, JTable table) {
-        this.table = table;
+    public AddForm() {
         initComponents();
     }
 
-    private List<String> addData() {
-        List<String> data = new ArrayList<>();
-        data.add(nameField.getText());
-        data.add(genderOption.getSelectedItem().toString());
-        data.add(dobField.getText());
-        data.add(roleOption.getSelectedItem().toString());
-        data.add(deptOption.getSelectedItem().toString());
-        data.add(salaryField.getText());
+    private Employee getNewEmployee() {
+        String name = nameField.getText();
+        String gender = genderOption.getSelectedItem().toString();
+        String dob = dobField.getText();
+        String mobile = mobileField.getText();
+        String email = emailField.getText();
+        String role = roleOption.getSelectedItem().toString();
+        String dept = deptOption.getSelectedItem().toString();
+        String salary = salaryField.getText();
+        String type = typeOption.getSelectedItem().toString();
 
-        return data;
+        return new Employee(name, gender, dob, mobile, email, role, dept, salary, type);
+    }
+
+    private boolean isFieldNotEmpty() {
+        String name = nameField.getText();
+        String dob = dobField.getText();
+        String mobile = mobileField.getText();
+        String email = emailField.getText();
+        String salary = salaryField.getText();
+
+        return (name.isEmpty()
+                && dob.isEmpty()
+                && mobile.isEmpty()
+                && email.isEmpty()
+                && salary.isEmpty());
     }
 
     @SuppressWarnings("unchecked")
@@ -53,6 +63,12 @@ public class AddForm extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         submitButton = new javax.swing.JButton();
         backButton = new javax.swing.JButton();
+        mobileField = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        emailField = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        typeOption = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -133,6 +149,20 @@ public class AddForm extends javax.swing.JFrame {
             }
         });
 
+        mobileField.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel7.setText("Mobile number");
+
+        emailField.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel8.setText("Email");
+
+        typeOption.setBackground(new java.awt.Color(255, 255, 255));
+        typeOption.setForeground(new java.awt.Color(0, 0, 0));
+        typeOption.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Fulltime", "Part time" }));
+
+        jLabel9.setText("Employee type");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -150,19 +180,31 @@ public class AddForm extends javax.swing.JFrame {
                             .addComponent(jLabel1)
                             .addComponent(genderOption, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addComponent(salaryField)
+                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(mobileField, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel8)
+                            .addComponent(emailField)))
                     .addComponent(jLabel6)
                     .addComponent(jLabel2)
+                    .addComponent(AddingFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4)
                             .addComponent(roleOption, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel5)
-                            .addComponent(deptOption, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(AddingFormTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 386, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(submitButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(backButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(deptOption, javax.swing.GroupLayout.PREFERRED_SIZE, 142, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel5))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel9)
+                            .addComponent(typeOption, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -170,7 +212,7 @@ public class AddForm extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addComponent(AddingFormTitle)
-                .addGap(41, 41, 41)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(nameField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -182,23 +224,33 @@ public class AddForm extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(genderOption)
                     .addComponent(dobField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(22, 22, 22)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(emailField, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
+                    .addComponent(mobileField))
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(jLabel5))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jLabel5)
+                    .addComponent(jLabel9))
+                .addGap(4, 4, 4)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(roleOption, javax.swing.GroupLayout.DEFAULT_SIZE, 40, Short.MAX_VALUE)
                     .addComponent(deptOption)
-                    .addComponent(roleOption, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(typeOption))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(salaryField, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(83, 83, 83)
+                .addGap(39, 39, 39)
                 .addComponent(submitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(backButton, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(45, Short.MAX_VALUE))
+                .addContainerGap(65, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -217,27 +269,26 @@ public class AddForm extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void HandleSubmit(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleSubmit
-        if (nameField.getText().isEmpty() || dobField.getText().isEmpty() || salaryField.getText().isEmpty()) {
+        if (isFieldNotEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter all data");
         } else {
             dataValidator = new DataValidator();
             // adding data to list
-            List<String> data = addData();
-            String role = roleOption.getSelectedItem().toString();
-            String dept = deptOption.getSelectedItem().toString();
+            Employee preAuthenticatedEmp = getNewEmployee();
 
-//            System.out.println(role + "  " + dept);
-
-            if (dataValidator.validateRole(role, dept) && dataValidator.validateDataFormat(data)) {
+            if (dataValidator.validateRole(preAuthenticatedEmp) && dataValidator.validateDataFormat(preAuthenticatedEmp)) {
                 // add data to storage
-                DataStorage.addData(data);
-                DataStorage.addDataByDept(data);
+                DataStorage.addData(preAuthenticatedEmp);
+                DataStorage.addDataByDept(preAuthenticatedEmp);
 
                 // Send success message and reset data field
                 JOptionPane.showMessageDialog(this, "Success");
                 nameField.setText("");
                 dobField.setText("");
                 salaryField.setText("");
+                emailField.setText("");
+                mobileField.setText("");
+                typeOption.setSelectedIndex(0);
                 genderOption.setSelectedIndex(0);
                 roleOption.setSelectedIndex(0);
                 deptOption.setSelectedIndex(0);
@@ -249,8 +300,8 @@ public class AddForm extends javax.swing.JFrame {
 
     private void HandleReturn(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleReturn
         var demo = new AppFrame();
-        this.dispose();
         demo.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_HandleReturn
 
 
@@ -259,6 +310,7 @@ public class AddForm extends javax.swing.JFrame {
     private javax.swing.JButton backButton;
     private javax.swing.JComboBox<String> deptOption;
     private javax.swing.JTextField dobField;
+    private javax.swing.JTextField emailField;
     private javax.swing.JComboBox<String> genderOption;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -266,10 +318,15 @@ public class AddForm extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JTextField mobileField;
     private javax.swing.JTextField nameField;
     private javax.swing.JComboBox<String> roleOption;
     private javax.swing.JTextField salaryField;
     private javax.swing.JButton submitButton;
+    private javax.swing.JComboBox<String> typeOption;
     // End of variables declaration//GEN-END:variables
 }

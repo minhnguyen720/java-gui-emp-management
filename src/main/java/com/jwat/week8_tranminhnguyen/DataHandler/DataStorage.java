@@ -1,104 +1,73 @@
 package com.jwat.week8_tranminhnguyen.DataHandler;
 
+import com.jwat.week8_tranminhnguyen.model.Employee;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DataStorage {
 
-    private static List<List<String>> dataFromTable = new ArrayList<>();
-    private static List<List<String>> itDeptList = new ArrayList<>();
-    private static List<List<String>> accountDeptList = new ArrayList<>();
-    private static List<List<String>> hrDeptList = new ArrayList<>();
-    private static List<List<String>> salesDeptList = new ArrayList<>();
+    private static List<Employee> dataFromTable = new ArrayList<>();
+    private static List<Employee> itDeptList = new ArrayList<>();
+    private static List<Employee> accountDeptList = new ArrayList<>();
+    private static List<Employee> hrDeptList = new ArrayList<>();
+    private static List<Employee> salesDeptList = new ArrayList<>();
 
     //-------------- Get data methods ---------------
-    public static List<List<String>> getData() {
+    public static List<Employee> getData() {
         return dataFromTable;
     }
 
-    public static List<List<String>> getItData() {
+    public static List<Employee> getItData() {
         return itDeptList;
     }
 
-    public static List<List<String>> getHrData() {
+    public static List<Employee> getHrData() {
         return hrDeptList;
     }
 
-    public static List<List<String>> getAccountData() {
+    public static List<Employee> getAccountData() {
         return accountDeptList;
     }
 
-    public static List<List<String>> getSalesData() {
+    public static List<Employee> getSalesData() {
         return salesDeptList;
     }
 
     //------------ Add data methods -----------------
-    public static void addData(List<String> data) {
+    public static void addData(Employee data) {
         dataFromTable.add(data);
     }
 
-    public static void addDataByDept(List<String> e) {
-            if (e.get(4).equalsIgnoreCase("it")) {
-                itDeptList.add(e);
-            }
-            if (e.get(4).equalsIgnoreCase("account")) {
-                accountDeptList.add(e);
-            }
-            if (e.get(4).equalsIgnoreCase("sales")) {
-                salesDeptList.add(e);
-            }
-            if (e.get(4).equalsIgnoreCase("hr")) {
-                hrDeptList.add(e);
-            }
-            
-//            System.out.println("IT " + itDeptList.size());
-//            System.out.println("Acc " + accountDeptList.size());
-//            System.out.println("hr " + hrDeptList.size());
-//            System.out.println("sales " + salesDeptList.size());
+    public static void addDataByDept(Employee e) {
+        if (e.getRole().equalsIgnoreCase("it")) {
+            itDeptList.add(e);
+        }
+        if (e.getRole().equalsIgnoreCase("account")) {
+            accountDeptList.add(e);
+        }
+        if (e.getRole().equalsIgnoreCase("sales")) {
+            salesDeptList.add(e);
+        }
+        if (e.getRole().equalsIgnoreCase("hr")) {
+            hrDeptList.add(e);
+        }
     }
 
 // ----------------------------------------------
-    public static void initDummyData() {
-        List<String> dummy = new ArrayList<>();
-        dummy.add("s1");
-        dummy.add("Male");
-        dummy.add("07/02/2000");
-        dummy.add("Staff");
-        dummy.add("IT");
-        dummy.add("12000");
-        dataFromTable.add(dummy);
+    public static void updateByIndex(Employee emp, int index) {
+        List<String> row = new ArrayList<>();
 
-        List<String> dummy1 = new ArrayList<>();
-        dummy1.add("d");
-        dummy1.add("Male");
-        dummy1.add("07/02/2000");
-        dummy1.add("Director");
-        dummy1.add("IT");
-        dummy1.add("12000");
-        dataFromTable.add(dummy1);
+        row.add(emp.getName());
+        row.add(emp.getGender());
+        row.add(emp.getDob());
+        row.add(emp.getMobile());
+        row.add(emp.getEmail());
+        row.add(emp.getRole());
+        row.add(emp.getDept());
+        row.add(emp.getSalary());
+        row.add(emp.getType());
 
-        List<String> dummy2 = new ArrayList<>();
-        dummy2.add("m");
-        dummy2.add("Male");
-        dummy2.add("07/02/2000");
-        dummy2.add("Manager");
-        dummy2.add("IT");
-        dummy2.add("12000");
-        dataFromTable.add(dummy2);
-
-        List<String> dummy3 = new ArrayList<>();
-        dummy3.add("s2");
-        dummy3.add("Male");
-        dummy3.add("07/02/2000");
-        dummy3.add("Staff");
-        dummy3.add("IT");
-        dummy3.add("12000");
-        dataFromTable.add(dummy3);
-    }
-
-    public static void updateByIndex(List<String> data, int index) {
-        System.out.println(index);
-        dataFromTable.set(index, data);
+        dataFromTable.set(index, emp);
     }
 
     public static void remove(int index) {
@@ -109,11 +78,11 @@ public class DataStorage {
         return dataFromTable.size();
     }
 
-    public static List<List<String>> searchByName(String nameToSearch) {
-        List<List<String>> matchedData = new ArrayList<>();
-        for (List<String> list : dataFromTable) {
-            if (list.get(0).equalsIgnoreCase(nameToSearch)) {
-                matchedData.add(list);
+    public static List<Employee> searchByName(String nameToSearch) {
+        List<Employee> matchedData = new ArrayList<>();
+        for (Employee emp : dataFromTable) {
+            if (emp.getName().equalsIgnoreCase(nameToSearch)) {
+                matchedData.add(emp);
             }
         }
 

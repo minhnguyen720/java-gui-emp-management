@@ -3,21 +3,25 @@ package com.jwat.week8_tranminhnguyen;
 import com.jwat.week8_tranminhnguyen.DataHandler.DataStorage;
 import com.jwat.week8_tranminhnguyen.AddForm.AddForm;
 import com.jwat.week8_tranminhnguyen.UpdateForm.UpdateForm;
+import com.jwat.week8_tranminhnguyen.model.Employee;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 public class AppFrame extends javax.swing.JFrame {
 
+    private final DefaultTableModel tblModel;
+
     public AppFrame() {
         initComponents();
+        tblModel = (DefaultTableModel) table.getModel();
         configureComponents();
-//        DataStorage.initDummyData();
         initTableData();
         initStatistic();
     }
+
     // ------------ Custom code ----------------
-    
     private void configureComponents() {
         table.getTableHeader().setReorderingAllowed(false);
     }
@@ -26,17 +30,38 @@ public class AppFrame extends javax.swing.JFrame {
         amtEmp.setText(Integer.toString(DataStorage.getVolume()));
     }
 
+    private List<String> initRow(Employee emp) {
+        List<String> row = new ArrayList<>();
+
+        row.add(emp.getId().toString());
+        row.add(emp.getName());
+        row.add(emp.getGender());
+        row.add(emp.getDob());
+        row.add(emp.getMobile());
+        row.add(emp.getEmail());
+        row.add(emp.getRole());
+        row.add(emp.getDept());
+        row.add(emp.getSalary());
+        row.add(emp.getType());
+
+        return row;
+    }
+
     private void initTableData() {
-        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
-        List<List<String>> data = DataStorage.getData();
-        for (List<String> row : data) {
+//        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+        List<Employee> data = DataStorage.getData();
+
+        for (Employee emp : data) {
+            List<String> row = initRow(emp);
             tblModel.addRow(row.toArray());
         }
     }
-    
-    
-    // ------------ Auto generated code ---------------
 
+    private void clearTable() {
+        tblModel.setRowCount(0);
+    }
+
+    // ------------ Auto generated code ---------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -73,6 +98,7 @@ public class AppFrame extends javax.swing.JFrame {
         searchBar = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
+        jComboBox1 = new javax.swing.JComboBox<>();
         TableContainer = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -419,6 +445,11 @@ public class AppFrame extends javax.swing.JFrame {
             }
         });
 
+        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IT", "HR", "ACC", "SAL" }));
+        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jComboBox1.setFocusable(false);
+
         javax.swing.GroupLayout GenralInfoLayout = new javax.swing.GroupLayout(GenralInfo);
         GenralInfo.setLayout(GenralInfoLayout);
         GenralInfoLayout.setHorizontalGroup(
@@ -433,7 +464,9 @@ public class AppFrame extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GenralInfoLayout.createSequentialGroup()
                 .addComponent(UserTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(333, 333, 333)
+                .addGap(221, 221, 221)
+                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(searchButton, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -451,17 +484,19 @@ public class AppFrame extends javax.swing.JFrame {
                     .addComponent(TotalDept, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(TotalEmp, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGroup(GenralInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(GenralInfoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(UserTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(12, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GenralInfoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(GenralInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(39, 39, 39))))
+                            .addGroup(GenralInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(39, 39, 39))
+                    .addGroup(GenralInfoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(UserTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
 
         TableContainer.setBackground(new java.awt.Color(255, 255, 255));
@@ -469,6 +504,7 @@ public class AppFrame extends javax.swing.JFrame {
         TableContainer.setForeground(new java.awt.Color(255, 255, 255));
         TableContainer.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
 
+        table.setBackground(new java.awt.Color(255, 255, 255));
         table.setFont(new java.awt.Font("Segoe UI Light", 0, 18)); // NOI18N
         table.setForeground(new java.awt.Color(51, 51, 51));
         table.setModel(new javax.swing.table.DefaultTableModel(
@@ -476,11 +512,11 @@ public class AppFrame extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Name", "Gender", "DOB", "Role", "Department", "Salary"
+                "ID", "Name", "Gender", "DOB", "Mobile", "Email", "Role", "Department", "Salary", "Emp Type"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+                java.lang.String.class, java.lang.String.class, java.lang.Object.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -490,7 +526,18 @@ public class AppFrame extends javax.swing.JFrame {
         table.setDragEnabled(true);
         table.setRowHeight(30);
         table.setShowGrid(true);
+        table.getTableHeader().setReorderingAllowed(false);
         TableContainer.setViewportView(table);
+        if (table.getColumnModel().getColumnCount() > 0) {
+            table.getColumnModel().getColumn(0).setPreferredWidth(1);
+            table.getColumnModel().getColumn(2).setPreferredWidth(1);
+            table.getColumnModel().getColumn(3).setPreferredWidth(4);
+            table.getColumnModel().getColumn(4).setPreferredWidth(6);
+            table.getColumnModel().getColumn(6).setPreferredWidth(1);
+            table.getColumnModel().getColumn(7).setPreferredWidth(3);
+            table.getColumnModel().getColumn(8).setPreferredWidth(4);
+            table.getColumnModel().getColumn(9).setPreferredWidth(3);
+        }
 
         javax.swing.GroupLayout bgLayout = new javax.swing.GroupLayout(bg);
         bg.setLayout(bgLayout);
@@ -532,7 +579,7 @@ public class AppFrame extends javax.swing.JFrame {
     private void AddButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseClicked
         this.setVisible(false);
         this.dispose();
-        new AddForm(this, this.table).setVisible(true);
+        new AddForm().setVisible(true);
 
     }//GEN-LAST:event_AddButtonMouseClicked
 
@@ -541,7 +588,7 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseButtonMouseClicked
 
     private void HandleDelete(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleDelete
-        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+//        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
         try {
             int selectedRowIndex = table.getSelectedRow();
             tblModel.removeRow(selectedRowIndex);
@@ -564,22 +611,20 @@ public class AppFrame extends javax.swing.JFrame {
 
     private void handleSearch(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_handleSearch
         String nameToSearch = searchBar.getText();
-        List<List<String>> matchedData = DataStorage.searchByName(nameToSearch);
+        List<Employee> matchedData = DataStorage.searchByName(nameToSearch);
 
-        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
-        tblModel.setRowCount(0);
-        for (List<String> row : matchedData) {
+//        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
+        clearTable();
+        for (Employee emp : matchedData) {
+            List<String> row = initRow(emp);
             tblModel.addRow(row.toArray());
         }
     }//GEN-LAST:event_handleSearch
 
     private void handleRefresh(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_handleRefresh
-        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
-        tblModel.setRowCount(0);
-        List<List<String>> data = DataStorage.getData();
-        for (List<String> row : data) {
-            tblModel.addRow(row.toArray());
-        }
+
+        clearTable();
+        initTableData();
     }//GEN-LAST:event_handleRefresh
 
     private void HandleSave(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleSave
@@ -587,7 +632,7 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_HandleSave
 
     private void HandleUpload(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleUpload
-       
+
     }//GEN-LAST:event_HandleUpload
 
 
@@ -611,6 +656,7 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JLabel amtEmp;
     private javax.swing.JPanel bg;
     private javax.swing.JButton jButton1;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

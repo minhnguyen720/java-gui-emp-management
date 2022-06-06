@@ -1,52 +1,55 @@
 package com.jwat.week8_tranminhnguyen.DataHandler;
 
+import com.jwat.week8_tranminhnguyen.model.Employee;
 import java.util.List;
 import java.util.regex.Pattern;
 
 public class DataValidator {
 
-    private List<List<String>> dataFromTable = DataStorage.getData();
+    private List<Employee> dataFromTable = DataStorage.getData();
     private int directorCounter = 0;
     private int managerCounter = 0;
 
     // Pattern
-//    private final String PHONE_NUMBER_PATTERN = "\\d{10}";
-    private static Pattern NAME_PATTERN = Pattern.compile("[a-zA-Z]+");
-    private static Pattern DATE_PATTERN = Pattern.compile(
+    private final Pattern MOBILE_PATTERN = Pattern.compile("\\d{10}");
+    private final Pattern EMAIL_PATTERN
+            = Pattern.compile("^(.+)@(\\S+)$");
+    private final Pattern NAME_PATTERN = Pattern.compile("[a-zA-Z]+");
+    private final Pattern DATE_PATTERN = Pattern.compile(
             "^\\d{2}-\\d{2}-\\d{4}$");
-    private static Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
+    private final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 
     public DataValidator() {
     }
 
-    public boolean validateRole(String role, String dept) {
-        if (validateDirector(role) && validateManager(role, dept)) {
+    public boolean validateRole(Employee e) {
+        if (validateDirector(
+                e.getRole(),
+                e.getId().toString())
+                && validateManager(
+                        e.getRole(),
+                        e.getDept(),
+                        e.getId().toString())) {
             return true;
         }
         return false;
     }
 
-    public boolean validateDataFormat(List<String> data) {
-        final String name = data.get(0);
-        final String dob = data.get(2);
-        final String salary = data.get(5);
+    public boolean validateDataFormat(Employee emp) {
+        final String name = emp.getName();
+        final String dob = emp.getDob();
+        final String salary = emp.getSalary();
+        final String email = emp.getEmail();
+        final String mobile = emp.getMobile();
 
-        if (!NAME_PATTERN.matcher(name).matches()) {
-            return false;
-        }
-
-        if (!DATE_PATTERN.matcher(dob).matches()) {
-            return false;
-        }
-
-        if (!NUMBER_PATTERN.matcher(salary).matches()) {
-            return false;
-        }
-
-        return true;
+        return (NAME_PATTERN.matcher(name).matches()
+                && EMAIL_PATTERN.matcher(email).matches()
+                && DATE_PATTERN.matcher(dob).matches()
+                && NUMBER_PATTERN.matcher(salary).matches()
+                && MOBILE_PATTERN.matcher(mobile).matches());
     }
 
-    private List<List<String>> getTargetDeptList(String dept) {
+    private List<Employee> getTargetDeptList(String dept) {
         if (dept.equalsIgnoreCase("IT")) {
             return DataStorage.getItData();
         } else if (dept.equalsIgnoreCase("Account")) {
@@ -58,12 +61,12 @@ public class DataValidator {
         }
     }
 
-    private boolean validateManager(String role, String dept) {
-        List<List<String>> targetDeptList = getTargetDeptList(dept);
+    private boolean validateManager(String role, String dept, String id) {
+        List<Employee> targetDeptList = getTargetDeptList(dept);
+
         if (role.equalsIgnoreCase("Manager")) {
-            for (List<String> emp : targetDeptList) {
-                String roleFromList = emp.get(3);
-                if (roleFromList.equalsIgnoreCase("Manager")) {
+            for (Employee emp : targetDeptList) {
+                if (emp.getRole().equalsIgnoreCase("Manager") && !(emp.getId().toString().equals(id))) {
                     managerCounter++;
                 }
             }
@@ -75,12 +78,11 @@ public class DataValidator {
         return true;
     }
 
-    private boolean validateDirector(String role) {
+    private boolean validateDirector(String role, String id) {
         if (role.equalsIgnoreCase("director")) {
-            for (List<String> list : dataFromTable) {
-                String roleFromList = list.get(3);
-
-                if (roleFromList.equalsIgnoreCase("director")) {
+            for (Employee emp : dataFromTable) {
+                if (emp.getRole().equalsIgnoreCase("director")
+                        && !(emp.getId().toString().equals(id))) {
                     directorCounter++;
                 }
             }
@@ -88,6 +90,7 @@ public class DataValidator {
                 return false;
             }
         }
+
         return true;
     }
 }
