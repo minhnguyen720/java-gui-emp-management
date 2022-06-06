@@ -57,6 +57,34 @@ public class AppFrame extends javax.swing.JFrame {
         }
     }
 
+    private void initTableByRole(String type) {
+        List<Employee> data;
+        switch (type) {
+            case "All":
+                data = DataStorage.getData();
+                break;
+            case "IT":
+                data = DataStorage.getItData();
+                break;
+            case "ACC":
+                data = DataStorage.getAccountData();
+                break;
+            case "HR":
+                data = DataStorage.getHrData();
+                break;
+            case "SAL":
+                data = DataStorage.getSalesData();
+                break;
+            default:
+                data = DataStorage.getData();
+        }
+        System.out.println(data.size());
+        for (Employee emp : data) {
+            List<String> row = initRow(emp);
+            tblModel.addRow(row.toArray());
+        }
+    }
+
     private void clearTable() {
         tblModel.setRowCount(0);
     }
@@ -98,7 +126,7 @@ public class AppFrame extends javax.swing.JFrame {
         searchBar = new javax.swing.JTextField();
         searchButton = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        TableType = new javax.swing.JComboBox<>();
         TableContainer = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
 
@@ -445,10 +473,15 @@ public class AppFrame extends javax.swing.JFrame {
             }
         });
 
-        jComboBox1.setBackground(new java.awt.Color(255, 255, 255));
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IT", "HR", "ACC", "SAL" }));
-        jComboBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jComboBox1.setFocusable(false);
+        TableType.setBackground(new java.awt.Color(255, 255, 255));
+        TableType.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "All", "IT", "HR", "ACC", "SAL" }));
+        TableType.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        TableType.setFocusable(false);
+        TableType.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                HandleShowData(evt);
+            }
+        });
 
         javax.swing.GroupLayout GenralInfoLayout = new javax.swing.GroupLayout(GenralInfo);
         GenralInfo.setLayout(GenralInfoLayout);
@@ -465,7 +498,7 @@ public class AppFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, GenralInfoLayout.createSequentialGroup()
                 .addComponent(UserTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(221, 221, 221)
-                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(TableType, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 415, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -491,7 +524,7 @@ public class AppFrame extends javax.swing.JFrame {
                             .addComponent(searchButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addGroup(GenralInfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(searchBar, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addComponent(TableType, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(39, 39, 39))
                     .addGroup(GenralInfoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -622,7 +655,6 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_handleSearch
 
     private void handleRefresh(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_handleRefresh
-
         clearTable();
         initTableData();
     }//GEN-LAST:event_handleRefresh
@@ -633,7 +665,13 @@ public class AppFrame extends javax.swing.JFrame {
 
     private void HandleUpload(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleUpload
 
+
     }//GEN-LAST:event_HandleUpload
+
+    private void HandleShowData(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_HandleShowData
+        clearTable();
+        initTableByRole(TableType.getSelectedItem().toString());
+    }//GEN-LAST:event_HandleShowData
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -647,6 +685,7 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JPanel SaveButton;
     private javax.swing.JPanel SideMenu;
     private javax.swing.JScrollPane TableContainer;
+    private javax.swing.JComboBox<String> TableType;
     private javax.swing.JPanel TotalDept;
     private javax.swing.JPanel TotalEmp;
     private javax.swing.JPanel UpdateButton;
@@ -656,7 +695,6 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JLabel amtEmp;
     private javax.swing.JPanel bg;
     private javax.swing.JButton jButton1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

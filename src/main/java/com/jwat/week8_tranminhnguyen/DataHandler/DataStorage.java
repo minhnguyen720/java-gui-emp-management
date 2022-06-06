@@ -39,16 +39,16 @@ public class DataStorage {
     }
 
     public static void addDataByDept(Employee e) {
-        if (e.getRole().equalsIgnoreCase("it")) {
+        if (e.getDept().equalsIgnoreCase("it")) {
             itDeptList.add(e);
         }
-        if (e.getRole().equalsIgnoreCase("account")) {
+        if (e.getDept().equalsIgnoreCase("account")) {
             accountDeptList.add(e);
         }
-        if (e.getRole().equalsIgnoreCase("sales")) {
+        if (e.getDept().equalsIgnoreCase("sales")) {
             salesDeptList.add(e);
         }
-        if (e.getRole().equalsIgnoreCase("hr")) {
+        if (e.getDept().equalsIgnoreCase("hr")) {
             hrDeptList.add(e);
         }
     }
