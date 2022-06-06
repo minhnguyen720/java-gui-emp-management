@@ -1,6 +1,7 @@
 package com.jwat.week8_tranminhnguyen;
 
-import com.jwat.week8_tranminhnguyen.DataHandler.DataStorage;
+import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
+import com.jwat.week8_tranminhnguyen.dataHandler.DataStorage;
 import com.jwat.week8_tranminhnguyen.AddForm.AddForm;
 import com.jwat.week8_tranminhnguyen.UpdateForm.UpdateForm;
 import com.jwat.week8_tranminhnguyen.model.Employee;
@@ -12,9 +13,11 @@ import javax.swing.table.DefaultTableModel;
 public class AppFrame extends javax.swing.JFrame {
 
     private final DefaultTableModel tblModel;
+    private Controller controller;
 
-    public AppFrame() {
+    public AppFrame(Controller controller) {
         initComponents();
+        this.controller = controller;
         tblModel = (DefaultTableModel) table.getModel();
         configureComponents();
         initTableData();
@@ -48,9 +51,11 @@ public class AppFrame extends javax.swing.JFrame {
     }
 
     private void initTableData() {
+        DataStorage.clearData();
 //        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
-        List<Employee> data = DataStorage.getData();
+        controller.getEmployee(); // get all emp from db and add to local storage
 
+        List<Employee> data = DataStorage.getData();
         for (Employee emp : data) {
             List<String> row = initRow(emp);
             tblModel.addRow(row.toArray());
@@ -60,9 +65,6 @@ public class AppFrame extends javax.swing.JFrame {
     private void initTableByRole(String type) {
         List<Employee> data;
         switch (type) {
-            case "All":
-                data = DataStorage.getData();
-                break;
             case "IT":
                 data = DataStorage.getItData();
                 break;
@@ -78,7 +80,6 @@ public class AppFrame extends javax.swing.JFrame {
             default:
                 data = DataStorage.getData();
         }
-        System.out.println(data.size());
         for (Employee emp : data) {
             List<String> row = initRow(emp);
             tblModel.addRow(row.toArray());
@@ -612,33 +613,37 @@ public class AppFrame extends javax.swing.JFrame {
     private void AddButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AddButtonMouseClicked
         this.setVisible(false);
         this.dispose();
-        new AddForm().setVisible(true);
+        new AddForm(new Controller()).setVisible(true);
 
     }//GEN-LAST:event_AddButtonMouseClicked
 
     private void CloseButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CloseButtonMouseClicked
-        System.exit(0);
+        this.dispose();
     }//GEN-LAST:event_CloseButtonMouseClicked
 
     private void HandleDelete(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleDelete
 //        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
         try {
-            int selectedRowIndex = table.getSelectedRow();
-            tblModel.removeRow(selectedRowIndex);
-            DataStorage.remove(selectedRowIndex);
-            initStatistic();
+//            int selectedRowIndex = table.getSelectedRow();
+//            tblModel.removeRow(selectedRowIndex);
+//            DataStorage.remove(selectedRowIndex);
+            String id = tblModel.getValueAt(table.getSelectedRow(), 0).toString();
+            controller.removeEmployee(id);
+            clearTable(); // prevent display mixed version table
+            initTableData(); // put latest data into table
+            initStatistic(); // auto update statistic, no need to press refresh button
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+            JOptionPane.showMessageDialog(this, "Please select a row from table to delete");
         }
     }//GEN-LAST:event_HandleDelete
 
     private void HandleUpdate(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleUpdate
-        try {
+        if (this.table.getSelectedRowCount() == 1) {
             this.setVisible(false);
             this.dispose();
             new UpdateForm(this, this.table).setVisible(true);
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, e);
+        } else {
+            JOptionPane.showMessageDialog(this, "Please select a row from table to update");
         }
     }//GEN-LAST:event_HandleUpdate
 

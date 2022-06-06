@@ -1,4 +1,4 @@
-package com.jwat.week8_tranminhnguyen.DataHandler;
+package com.jwat.week8_tranminhnguyen.dataHandler;
 
 import com.jwat.week8_tranminhnguyen.model.Employee;
 import java.util.List;

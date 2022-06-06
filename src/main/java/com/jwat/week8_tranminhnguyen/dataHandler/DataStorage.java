@@ -1,4 +1,4 @@
-package com.jwat.week8_tranminhnguyen.DataHandler;
+package com.jwat.week8_tranminhnguyen.dataHandler;
 
 import com.jwat.week8_tranminhnguyen.model.Employee;
 import java.util.ArrayList;
@@ -54,6 +54,14 @@ public class DataStorage {
     }
 
 // ----------------------------------------------
+    public static void clearData() {
+        dataFromTable.clear();
+        itDeptList.clear();
+        hrDeptList.clear();
+        accountDeptList.clear();
+        salesDeptList.clear();
+    }
+
     public static void updateByIndex(Employee emp, int index) {
         List<String> row = new ArrayList<>();
 

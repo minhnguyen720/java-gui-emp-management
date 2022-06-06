@@ -1,8 +1,9 @@
 package com.jwat.week8_tranminhnguyen.UpdateForm;
 
-import com.jwat.week8_tranminhnguyen.DataHandler.DataStorage;
+import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
+import com.jwat.week8_tranminhnguyen.dataHandler.DataStorage;
 import com.jwat.week8_tranminhnguyen.AppFrame;
-import com.jwat.week8_tranminhnguyen.DataHandler.DataValidator;
+import com.jwat.week8_tranminhnguyen.dataHandler.DataValidator;
 import com.jwat.week8_tranminhnguyen.model.Employee;
 
 import javax.swing.JFrame;
@@ -312,7 +313,7 @@ public class UpdateForm extends javax.swing.JFrame {
             Employee preAuthenticatedEmp = updateEmployee();
             if (dataValidator.validateRole(preAuthenticatedEmp)) {
                 DataStorage.updateByIndex(preAuthenticatedEmp, selectedRow);
-                var demo = new AppFrame();
+                var demo = new AppFrame(new Controller());
                 this.dispose();
                 demo.setVisible(true);
             } else {
@@ -322,7 +323,7 @@ public class UpdateForm extends javax.swing.JFrame {
     }//GEN-LAST:event_HandleSubmit
 
     private void cancleBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cancleBtnMouseClicked
-        var demo = new AppFrame();
+        var demo = new AppFrame(new Controller());
         this.dispose();
         demo.setVisible(true);
     }//GEN-LAST:event_cancleBtnMouseClicked

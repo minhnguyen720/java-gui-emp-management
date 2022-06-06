@@ -1,7 +1,8 @@
 package com.jwat.week8_tranminhnguyen.AddForm;
 
-import com.jwat.week8_tranminhnguyen.DataHandler.DataStorage;
-import com.jwat.week8_tranminhnguyen.DataHandler.DataValidator;
+import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
+import com.jwat.week8_tranminhnguyen.dataHandler.DataStorage;
+import com.jwat.week8_tranminhnguyen.dataHandler.DataValidator;
 import com.jwat.week8_tranminhnguyen.AppFrame;
 import com.jwat.week8_tranminhnguyen.model.Employee;
 
@@ -10,9 +11,11 @@ import javax.swing.JOptionPane;
 public class AddForm extends javax.swing.JFrame {
 
     private DataValidator dataValidator;
+    private Controller controller;
 
-    public AddForm() {
+    public AddForm(Controller controller) {
         initComponents();
+        this.controller = controller;
     }
 
     private Employee getNewEmployee() {
@@ -278,8 +281,15 @@ public class AddForm extends javax.swing.JFrame {
 
             if (dataValidator.validateRole(preAuthenticatedEmp) && dataValidator.validateDataFormat(preAuthenticatedEmp)) {
                 // add data to storage
-                DataStorage.addData(preAuthenticatedEmp);
-                DataStorage.addDataByDept(preAuthenticatedEmp);
+//                DataStorage.addData(preAuthenticatedEmp);
+//                DataStorage.addDataByDept(preAuthenticatedEmp);
+
+                // --------------- add new emp to DB ---------------
+
+                controller.addEmployee(preAuthenticatedEmp);
+
+
+                // -------------------------------------------------
 
                 // Send success message and reset data field
                 JOptionPane.showMessageDialog(this, "Success");
@@ -299,7 +309,7 @@ public class AddForm extends javax.swing.JFrame {
     }//GEN-LAST:event_HandleSubmit
 
     private void HandleReturn(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleReturn
-        var demo = new AppFrame();
+        var demo = new AppFrame(new Controller());
         demo.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_HandleReturn

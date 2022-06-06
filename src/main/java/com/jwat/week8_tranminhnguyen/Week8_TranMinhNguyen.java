@@ -1,8 +1,9 @@
 package com.jwat.week8_tranminhnguyen;
 
-public class Week8_TranMinhNguyen {
+import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
 
+public class Week8_TranMinhNguyen {
     public static void main(String[] args) {
-        new AppFrame().setVisible(true);
+        new AppFrame(new Controller()).setVisible(true);
     }
 }
