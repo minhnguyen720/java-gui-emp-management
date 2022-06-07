@@ -1,6 +1,7 @@
 package com.jwat.week8_tranminhnguyen.dataHandler;
 
 import com.jwat.week8_tranminhnguyen.model.Employee;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class DataStorage {
         }
     }
 
-// ----------------------------------------------
+    // ----------------------------------------------
     public static void clearData() {
         DATA_FROM_TABLE.clear();
         IT_DEPT_LIST.clear();
@@ -68,7 +69,7 @@ public class DataStorage {
     public static List<Employee> searchByName(String nameToSearch) {
         List<Employee> matchedData = new ArrayList<>();
         for (Employee emp : DATA_FROM_TABLE) {
-            if (emp.getName().equalsIgnoreCase(nameToSearch)) {
+            if (emp.getName().equalsIgnoreCase(nameToSearch) || emp.getId().toString().equalsIgnoreCase(nameToSearch)) {
                 matchedData.add(emp);
             }
         }
