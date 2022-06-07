@@ -5,90 +5,69 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class DataStorage {
-
-    private static List<Employee> dataFromTable = new ArrayList<>();
-    private static List<Employee> itDeptList = new ArrayList<>();
-    private static List<Employee> accountDeptList = new ArrayList<>();
-    private static List<Employee> hrDeptList = new ArrayList<>();
-    private static List<Employee> salesDeptList = new ArrayList<>();
+    private static final List<Employee> DATA_FROM_TABLE = new ArrayList<>();
+    private static final List<Employee> IT_DEPT_LIST = new ArrayList<>();
+    private static final List<Employee> ACCOUNT_DEPT_LIST = new ArrayList<>();
+    private static final List<Employee> HR_DEPT_LIST = new ArrayList<>();
+    private static final List<Employee> SALES_DEPT_LIST = new ArrayList<>();
 
     //-------------- Get data methods ---------------
     public static List<Employee> getData() {
-        return dataFromTable;
+        return DATA_FROM_TABLE;
     }
 
     public static List<Employee> getItData() {
-        return itDeptList;
+        return IT_DEPT_LIST;
     }
 
     public static List<Employee> getHrData() {
-        return hrDeptList;
+        return HR_DEPT_LIST;
     }
 
     public static List<Employee> getAccountData() {
-        return accountDeptList;
+        return ACCOUNT_DEPT_LIST;
     }
 
     public static List<Employee> getSalesData() {
-        return salesDeptList;
+        return SALES_DEPT_LIST;
     }
 
     //------------ Add data methods -----------------
     public static void addData(Employee data) {
-        dataFromTable.add(data);
+        DATA_FROM_TABLE.add(data);
     }
 
     public static void addDataByDept(Employee e) {
         if (e.getDept().equalsIgnoreCase("it")) {
-            itDeptList.add(e);
+            IT_DEPT_LIST.add(e);
         }
         if (e.getDept().equalsIgnoreCase("account")) {
-            accountDeptList.add(e);
+            ACCOUNT_DEPT_LIST.add(e);
         }
         if (e.getDept().equalsIgnoreCase("sales")) {
-            salesDeptList.add(e);
+            SALES_DEPT_LIST.add(e);
         }
         if (e.getDept().equalsIgnoreCase("hr")) {
-            hrDeptList.add(e);
+            HR_DEPT_LIST.add(e);
         }
     }
 
 // ----------------------------------------------
     public static void clearData() {
-        dataFromTable.clear();
-        itDeptList.clear();
-        hrDeptList.clear();
-        accountDeptList.clear();
-        salesDeptList.clear();
-    }
-
-    public static void updateByIndex(Employee emp, int index) {
-        List<String> row = new ArrayList<>();
-
-        row.add(emp.getName());
-        row.add(emp.getGender());
-        row.add(emp.getDob());
-        row.add(emp.getMobile());
-        row.add(emp.getEmail());
-        row.add(emp.getRole());
-        row.add(emp.getDept());
-        row.add(emp.getSalary());
-        row.add(emp.getType());
-
-        dataFromTable.set(index, emp);
-    }
-
-    public static void remove(int index) {
-        dataFromTable.remove(index);
+        DATA_FROM_TABLE.clear();
+        IT_DEPT_LIST.clear();
+        HR_DEPT_LIST.clear();
+        ACCOUNT_DEPT_LIST.clear();
+        SALES_DEPT_LIST.clear();
     }
 
     public static int getVolume() {
-        return dataFromTable.size();
+        return DATA_FROM_TABLE.size();
     }
 
     public static List<Employee> searchByName(String nameToSearch) {
         List<Employee> matchedData = new ArrayList<>();
-        for (Employee emp : dataFromTable) {
+        for (Employee emp : DATA_FROM_TABLE) {
             if (emp.getName().equalsIgnoreCase(nameToSearch)) {
                 matchedData.add(emp);
             }

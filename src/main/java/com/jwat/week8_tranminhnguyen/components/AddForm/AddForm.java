@@ -1,7 +1,6 @@
-package com.jwat.week8_tranminhnguyen.AddForm;
+package com.jwat.week8_tranminhnguyen.components.AddForm;
 
 import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
-import com.jwat.week8_tranminhnguyen.dataHandler.DataStorage;
 import com.jwat.week8_tranminhnguyen.dataHandler.DataValidator;
 import com.jwat.week8_tranminhnguyen.AppFrame;
 import com.jwat.week8_tranminhnguyen.model.Employee;
@@ -10,8 +9,7 @@ import javax.swing.JOptionPane;
 
 public class AddForm extends javax.swing.JFrame {
 
-    private DataValidator dataValidator;
-    private Controller controller;
+    private final Controller controller;
 
     public AddForm(Controller controller) {
         initComponents();
@@ -19,31 +17,23 @@ public class AddForm extends javax.swing.JFrame {
     }
 
     private Employee getNewEmployee() {
-        String name = nameField.getText();
-        String gender = genderOption.getSelectedItem().toString();
-        String dob = dobField.getText();
-        String mobile = mobileField.getText();
-        String email = emailField.getText();
-        String role = roleOption.getSelectedItem().toString();
-        String dept = deptOption.getSelectedItem().toString();
-        String salary = salaryField.getText();
-        String type = typeOption.getSelectedItem().toString();
-
-        return new Employee(name, gender, dob, mobile, email, role, dept, salary, type);
+        return new Employee(nameField.getText()
+                , genderOption.getSelectedItem().toString()
+                , dobField.getText()
+                , mobileField.getText()
+                , emailField.getText()
+                , roleOption.getSelectedItem().toString()
+                , deptOption.getSelectedItem().toString()
+                , salaryField.getText()
+                , typeOption.getSelectedItem().toString());
     }
 
     private boolean isFieldNotEmpty() {
-        String name = nameField.getText();
-        String dob = dobField.getText();
-        String mobile = mobileField.getText();
-        String email = emailField.getText();
-        String salary = salaryField.getText();
-
-        return (name.isEmpty()
-                && dob.isEmpty()
-                && mobile.isEmpty()
-                && email.isEmpty()
-                && salary.isEmpty());
+        return (nameField.getText().isEmpty()
+                && dobField.getText().isEmpty()
+                && mobileField.getText().isEmpty()
+                && emailField.getText().isEmpty()
+                && salaryField.getText().isEmpty());
     }
 
     @SuppressWarnings("unchecked")
@@ -275,21 +265,12 @@ public class AddForm extends javax.swing.JFrame {
         if (isFieldNotEmpty()) {
             JOptionPane.showMessageDialog(this, "Please enter all data");
         } else {
-            dataValidator = new DataValidator();
+            DataValidator dataValidator = new DataValidator();
             // adding data to list
             Employee preAuthenticatedEmp = getNewEmployee();
 
             if (dataValidator.validateRole(preAuthenticatedEmp) && dataValidator.validateDataFormat(preAuthenticatedEmp)) {
-                // add data to storage
-//                DataStorage.addData(preAuthenticatedEmp);
-//                DataStorage.addDataByDept(preAuthenticatedEmp);
-
-                // --------------- add new emp to DB ---------------
-
                 controller.addEmployee(preAuthenticatedEmp);
-
-
-                // -------------------------------------------------
 
                 // Send success message and reset data field
                 JOptionPane.showMessageDialog(this, "Success");

@@ -2,10 +2,6 @@ package com.jwat.week8_tranminhnguyen.connection.controller;
 
 import com.jwat.week8_tranminhnguyen.model.Employee;
 
-import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-
 public interface IController {
     void addEmployee(Employee e);
 
@@ -13,5 +9,5 @@ public interface IController {
 
     void getEmployee();
 
-    void updateEmployee();
+    void updateEmployee(Employee e);
 }

@@ -2,10 +2,12 @@ package com.jwat.week8_tranminhnguyen;
 
 import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
 import com.jwat.week8_tranminhnguyen.dataHandler.DataStorage;
-import com.jwat.week8_tranminhnguyen.AddForm.AddForm;
-import com.jwat.week8_tranminhnguyen.UpdateForm.UpdateForm;
+import com.jwat.week8_tranminhnguyen.components.AddForm.AddForm;
+import com.jwat.week8_tranminhnguyen.components.UpdateForm.UpdateForm;
 import com.jwat.week8_tranminhnguyen.model.Employee;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -13,11 +15,13 @@ import javax.swing.table.DefaultTableModel;
 public class AppFrame extends javax.swing.JFrame {
 
     private final DefaultTableModel tblModel;
-    private Controller controller;
+    private final Controller controller;
 
     public AppFrame(Controller controller) {
         initComponents();
+
         this.controller = controller;
+
         tblModel = (DefaultTableModel) table.getModel();
         configureComponents();
         initTableData();
@@ -34,25 +38,22 @@ public class AppFrame extends javax.swing.JFrame {
     }
 
     private List<String> initRow(Employee emp) {
-        List<String> row = new ArrayList<>();
-
-        row.add(emp.getId().toString());
-        row.add(emp.getName());
-        row.add(emp.getGender());
-        row.add(emp.getDob());
-        row.add(emp.getMobile());
-        row.add(emp.getEmail());
-        row.add(emp.getRole());
-        row.add(emp.getDept());
-        row.add(emp.getSalary());
-        row.add(emp.getType());
-
-        return row;
+        return new ArrayList<>(Arrays.asList(
+                emp.getId().toString(),
+                emp.getName(),
+                emp.getGender(),
+                emp.getDob(),
+                emp.getMobile(),
+                emp.getEmail(),
+                emp.getRole(),
+                emp.getDept(),
+                emp.getSalary(),
+                emp.getType()
+        ));
     }
 
     private void initTableData() {
         DataStorage.clearData();
-//        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
         controller.getEmployee(); // get all emp from db and add to local storage
 
         List<Employee> data = DataStorage.getData();
@@ -109,12 +110,6 @@ public class AppFrame extends javax.swing.JFrame {
         RemoveButton = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
-        SaveButton = new javax.swing.JPanel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        UploadButton = new javax.swing.JPanel();
-        jLabel11 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
         GenralInfo = new javax.swing.JPanel();
         GeneralTitle = new javax.swing.JLabel();
         TotalEmp = new javax.swing.JPanel();
@@ -280,78 +275,6 @@ public class AppFrame extends javax.swing.JFrame {
                 .addGap(24, 24, 24))
         );
 
-        SaveButton.setBackground(new java.awt.Color(105, 105, 105));
-        SaveButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        SaveButton.setPreferredSize(new java.awt.Dimension(0, 73));
-        SaveButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HandleSave(evt);
-            }
-        });
-
-        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel8.setText("Save");
-
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/save-icon.png"))); // NOI18N
-
-        javax.swing.GroupLayout SaveButtonLayout = new javax.swing.GroupLayout(SaveButton);
-        SaveButton.setLayout(SaveButtonLayout);
-        SaveButtonLayout.setHorizontalGroup(
-            SaveButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(SaveButtonLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel10)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel8)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        SaveButtonLayout.setVerticalGroup(
-            SaveButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, SaveButtonLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(SaveButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel8)
-                    .addComponent(jLabel10))
-                .addGap(23, 23, 23))
-        );
-
-        UploadButton.setBackground(new java.awt.Color(102, 102, 102));
-        UploadButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        UploadButton.setPreferredSize(new java.awt.Dimension(0, 73));
-        UploadButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                HandleUpload(evt);
-            }
-        });
-
-        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel11.setText("Upload");
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/upload-icon.png"))); // NOI18N
-
-        javax.swing.GroupLayout UploadButtonLayout = new javax.swing.GroupLayout(UploadButton);
-        UploadButton.setLayout(UploadButtonLayout);
-        UploadButtonLayout.setHorizontalGroup(
-            UploadButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(UploadButtonLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel12)
-                .addGap(20, 20, 20)
-                .addComponent(jLabel11)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-        UploadButtonLayout.setVerticalGroup(
-            UploadButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, UploadButtonLayout.createSequentialGroup()
-                .addContainerGap(25, Short.MAX_VALUE)
-                .addGroup(UploadButtonLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel11)
-                    .addComponent(jLabel12))
-                .addGap(23, 23, 23))
-        );
-
         javax.swing.GroupLayout SideMenuLayout = new javax.swing.GroupLayout(SideMenu);
         SideMenu.setLayout(SideMenuLayout);
         SideMenuLayout.setHorizontalGroup(
@@ -360,8 +283,6 @@ public class AppFrame extends javax.swing.JFrame {
             .addComponent(RemoveButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(UpdateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(CloseButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(SaveButton, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
-            .addComponent(UploadButton, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
         );
         SideMenuLayout.setVerticalGroup(
             SideMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -372,10 +293,6 @@ public class AppFrame extends javax.swing.JFrame {
                 .addComponent(UpdateButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(RemoveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(SaveButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(UploadButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(CloseButton, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -622,11 +539,7 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_CloseButtonMouseClicked
 
     private void HandleDelete(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleDelete
-//        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
         try {
-//            int selectedRowIndex = table.getSelectedRow();
-//            tblModel.removeRow(selectedRowIndex);
-//            DataStorage.remove(selectedRowIndex);
             String id = tblModel.getValueAt(table.getSelectedRow(), 0).toString();
             controller.removeEmployee(id);
             clearTable(); // prevent display mixed version table
@@ -638,10 +551,10 @@ public class AppFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_HandleDelete
 
     private void HandleUpdate(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleUpdate
-        if (this.table.getSelectedRowCount() == 1) {
+        if (this.table.getSelectedRowCount() == 1) { // check if any row is selected
             this.setVisible(false);
             this.dispose();
-            new UpdateForm(this, this.table).setVisible(true);
+            new UpdateForm(this.table, new Controller()).setVisible(true);
         } else {
             JOptionPane.showMessageDialog(this, "Please select a row from table to update");
         }
@@ -651,7 +564,6 @@ public class AppFrame extends javax.swing.JFrame {
         String nameToSearch = searchBar.getText();
         List<Employee> matchedData = DataStorage.searchByName(nameToSearch);
 
-//        DefaultTableModel tblModel = (DefaultTableModel) table.getModel();
         clearTable();
         for (Employee emp : matchedData) {
             List<String> row = initRow(emp);
@@ -664,20 +576,14 @@ public class AppFrame extends javax.swing.JFrame {
         initTableData();
     }//GEN-LAST:event_handleRefresh
 
-    private void HandleSave(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleSave
-
-    }//GEN-LAST:event_HandleSave
-
-    private void HandleUpload(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_HandleUpload
-
-
-    }//GEN-LAST:event_HandleUpload
-
     private void HandleShowData(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_HandleShowData
         clearTable();
-        initTableByRole(TableType.getSelectedItem().toString());
+        try {
+            initTableByRole(TableType.getSelectedItem().toString());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_HandleShowData
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel AddButton;
@@ -687,30 +593,24 @@ public class AppFrame extends javax.swing.JFrame {
     private javax.swing.JLabel GeneralTitle;
     private javax.swing.JPanel GenralInfo;
     private javax.swing.JPanel RemoveButton;
-    private javax.swing.JPanel SaveButton;
     private javax.swing.JPanel SideMenu;
     private javax.swing.JScrollPane TableContainer;
     private javax.swing.JComboBox<String> TableType;
     private javax.swing.JPanel TotalDept;
     private javax.swing.JPanel TotalEmp;
     private javax.swing.JPanel UpdateButton;
-    private javax.swing.JPanel UploadButton;
     private javax.swing.JLabel UserTitle;
     private javax.swing.JLabel amtDept;
     private javax.swing.JLabel amtEmp;
     private javax.swing.JPanel bg;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JTextField searchBar;
     private javax.swing.JButton searchButton;

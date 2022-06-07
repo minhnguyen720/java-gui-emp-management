@@ -5,12 +5,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class RemoveService {
-    private Connection con;
-    private Statement st;
-    private String id;
+    private final Statement st;
+    private final String id;
 
-    public RemoveService(Connection con, Statement st,String id) {
-        this.con = con;
+    public RemoveService(Statement st,String id) {
         this.st = st;
         this.id = id;
     }
@@ -20,7 +18,6 @@ public class RemoveService {
         try {
             st.executeUpdate(query);
             st.close();
-            con.close();
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }

@@ -1,24 +1,25 @@
-package com.jwat.week8_tranminhnguyen.UpdateForm;
+package com.jwat.week8_tranminhnguyen.components.UpdateForm;
 
 import com.jwat.week8_tranminhnguyen.connection.controller.Controller;
-import com.jwat.week8_tranminhnguyen.dataHandler.DataStorage;
 import com.jwat.week8_tranminhnguyen.AppFrame;
 import com.jwat.week8_tranminhnguyen.dataHandler.DataValidator;
 import com.jwat.week8_tranminhnguyen.model.Employee;
 
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 public class UpdateForm extends javax.swing.JFrame {
-
     private final JTable table;
-    private int selectedRow;
-    private DefaultTableModel tblModel;
+    private final DefaultTableModel tblModel;
+    private final Controller controller;
 
-    public UpdateForm(JFrame frame, JTable table) {
+    private int selectedRow;
+
+    public UpdateForm(JTable table, Controller controller) {
         this.table = table;
+        this.controller = controller;
+
         initComponents();
         tblModel = (DefaultTableModel) table.getModel();
         initForm();
@@ -64,17 +65,11 @@ public class UpdateForm extends javax.swing.JFrame {
     }
 
     private boolean isFieldNotEmpty() {
-        String name = nameField.getText();
-        String dob = dobField.getText();
-        String mobile = mobileField.getText();
-        String email = emailField.getText();
-        String salary = salaryField.getText();
-
-        return (name.isEmpty()
-                && dob.isEmpty()
-                && mobile.isEmpty()
-                && email.isEmpty()
-                && salary.isEmpty());
+        return (nameField.getText().isEmpty()
+                && dobField.getText().isEmpty()
+                && mobileField.getText().isEmpty()
+                && emailField.getText().isEmpty()
+                && salaryField.getText().isEmpty());
     }
 
     @SuppressWarnings("unchecked")
@@ -312,7 +307,8 @@ public class UpdateForm extends javax.swing.JFrame {
             var dataValidator = new DataValidator();
             Employee preAuthenticatedEmp = updateEmployee();
             if (dataValidator.validateRole(preAuthenticatedEmp)) {
-                DataStorage.updateByIndex(preAuthenticatedEmp, selectedRow);
+                controller.updateEmployee(preAuthenticatedEmp);
+
                 var demo = new AppFrame(new Controller());
                 this.dispose();
                 demo.setVisible(true);

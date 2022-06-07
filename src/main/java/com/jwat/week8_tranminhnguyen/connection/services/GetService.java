@@ -27,10 +27,19 @@ public class GetService {
             List<Employee> allEmpList = new ArrayList<>();
             while (result.next()) {
                 for (int i = 0; i < rsmd.getColumnCount(); i++) {
-                    data.add(result.getString(i + 1));
-                    if (i == 9) {
+                    data.add(result.getString(i + 1)); // start from 1
+                    if (i == 9) { // row length is 10 -> i = 9 ~ end of the row -> create new emp and reset list
                         allEmpList.add(
-                                new Employee(data.get(0), data.get(1), data.get(2), data.get(3), data.get(4), data.get(5), data.get(6), data.get(7), data.get(8), data.get(9))
+                                new Employee(data.get(0)
+                                        , data.get(1)
+                                        , data.get(2)
+                                        , data.get(3)
+                                        , data.get(4)
+                                        , data.get(5)
+                                        , data.get(6)
+                                        , data.get(7)
+                                        , data.get(8)
+                                        , data.get(9))
                         );
                         data.clear();
                     }
@@ -45,8 +54,8 @@ public class GetService {
             st.close();
             con.close();
 
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (SQLException throwable) {
+            throwable.printStackTrace();
         }
     }
 }

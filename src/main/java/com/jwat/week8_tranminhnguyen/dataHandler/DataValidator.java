@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public class DataValidator {
+    private final List<Employee> DATA_FROM_TABLE = DataStorage.getData();
 
-    private List<Employee> dataFromTable = DataStorage.getData();
     private int directorCounter = 0;
     private int managerCounter = 0;
 
@@ -19,20 +19,14 @@ public class DataValidator {
             "^\\d{2}-\\d{2}-\\d{4}$");
     private final Pattern NUMBER_PATTERN = Pattern.compile("\\d+");
 
-    public DataValidator() {
-    }
-
     public boolean validateRole(Employee e) {
-        if (validateDirector(
+        return validateDirector(
                 e.getRole(),
                 e.getId().toString())
                 && validateManager(
-                        e.getRole(),
-                        e.getDept(),
-                        e.getId().toString())) {
-            return true;
-        }
-        return false;
+                e.getRole(),
+                e.getDept(),
+                e.getId().toString());
     }
 
     public boolean validateDataFormat(Employee emp) {
@@ -70,9 +64,8 @@ public class DataValidator {
                     managerCounter++;
                 }
             }
-            if (managerCounter >= 1) { // The department already has a manager
-                return false;
-            }
+            // The department already has a manager
+            return managerCounter < 1;
         }
 
         return true;
@@ -80,15 +73,14 @@ public class DataValidator {
 
     private boolean validateDirector(String role, String id) {
         if (role.equalsIgnoreCase("director")) {
-            for (Employee emp : dataFromTable) {
+            for (Employee emp : DATA_FROM_TABLE) {
                 if (emp.getRole().equalsIgnoreCase("director")
                         && !(emp.getId().toString().equals(id))) {
                     directorCounter++;
                 }
             }
-            if (directorCounter >= 1) { // There is already have a director
-                return false;
-            }
+            // There is already have a director
+            return directorCounter < 1;
         }
 
         return true;

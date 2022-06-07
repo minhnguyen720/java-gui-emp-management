@@ -10,19 +10,19 @@ import java.sql.Statement;
 public class ServiceManager {
     static private Connection con;
     static private Statement st;
-
-    private static final String username = "root";
-    private static final String password = "password";
-    private static final String url = "jdbc:mysql://localhost:3306/employee";
-
     public ServiceManager() {
-        try {
+        try { // check if driver existed
             Class.forName("com.mysql.cj.jdbc.Driver");
         } catch (
                 ClassNotFoundException e) {
             e.printStackTrace();
         }
+
         try {
+            String username = "root";
+            String password = "password";
+            String url = "jdbc:mysql://localhost:3306/employee";
+
             con = DriverManager.getConnection(url, username, password);
             st = con.createStatement();
         } catch (SQLException | NullPointerException e) {
@@ -31,22 +31,23 @@ public class ServiceManager {
     }
 
     public void addEmployee(Employee e) {
-        var addService = new AddService(con,st);
+        var addService = new AddService(st);
         addService.addEmployee(e);
     }
 
     public void removeEmployee(String id) {
-        var removeService = new RemoveService(con,st,id);
+        var removeService = new RemoveService(st,id);
         removeService.removeEmployee();
     }
 
-    public void updateEmployee() {
-
+    public void updateEmployee(Employee e) {
+        var updateService = new UpdateService(st);
+        updateService.updateEmployee(e);
     }
 
     public void getEmployee() {
-        var getter = new GetService(con, st);
-        getter.getEmployee();
+        var getService = new GetService(con, st);
+        getService.getEmployee();
 
     }
 }
